@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
     'test1',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'testData.urls'
+
+# 如果为True，则将不使用白名单，并且将接受所有来源。默认为False，所有的跨域请求都同意
+CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
@@ -77,8 +83,12 @@ WSGI_APPLICATION = 'testData.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'testData',
+        'USER': 'root',
+        'PASSWORD': '03224313@zsr',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
