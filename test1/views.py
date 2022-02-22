@@ -11,8 +11,8 @@ class demoViewSet(viewsets.ModelViewSet):
     """
     API ebdpoint that allows users to be viewed or edited
     """
-    # 将左右模型进行升降序排列order_by('-age'),所有查询objects.all()
-    queryset = demo.objects.all().order_by('-age')
+    # 将左右模型进行降序排列order_by('-age'),所有查询objects.all()
+    queryset = demo.objects.all().order_by('age')
     # 序列化器
     serializer_class = demoSerializer
 
