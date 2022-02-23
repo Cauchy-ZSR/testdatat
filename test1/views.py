@@ -21,5 +21,3 @@ class loginView(APIView):
     def post(self,request,*args,**kwargs):
         print(request.data)
         return Response({"status":True})
-
-
