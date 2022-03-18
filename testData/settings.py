@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 
@@ -84,11 +85,13 @@ WSGI_APPLICATION = 'testData.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testData',
+        'NAME': os.environ.get('MYSQL_DATABASE_NAME'),
         'USER': 'root',
-        'PASSWORD': '03224313@zsr',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'PASSWORD': os.environ.get('MYSQL_ENV_MYSQL_ROOT_PASSWORD'),
+        'HOST': os.environ.get('MYSQL_PORT_3306_TCP_ADDR'),
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks=0;",
+        }
     }
 }
 
