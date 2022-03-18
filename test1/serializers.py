@@ -3,6 +3,7 @@ from rest_framework import serializers
 from  .models import demo
 
 
+
 class demoSerializer(serializers.ModelSerializer):
     class Meta:
         # 需要序列化的模型

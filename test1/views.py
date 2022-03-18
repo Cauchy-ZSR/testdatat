@@ -3,29 +3,28 @@ from rest_framework import  viewsets
 from rest_framework.decorators import api_view
 from .models import demo
 from .serializers import demoSerializer
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import BasicAuthentication
+from rest_framework import status
+
+from test1 import serializers
 # Create your views here.
 
 
-class demoViewSet(viewsets.ModelViewSet):
-    """
-    API ebdpoint that allows users to be viewed or edited
-    """
-    # 将左右模型进行降序排列order_by('-age'),所有查询objects.all()
-    queryset = demo.objects.all().order_by('age')
-    # 序列化器
-    serializer_class = demoSerializer
-
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
-
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
-
-
-class loginView(APIView):
-    def post(self,request,*args,**kwargs):
-        print(request.data)
-        return Response({"status":True})
+class demoViewSet(viewsets.ViewSet):
+    def create(self, request):
+        serializer = demoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(status=status.HTTP_200_OK)
+    def update(self, request, pk):
+        try:
+            old_demo = demo.objects.get(name=pk)
+        except demo.DoesNotExist:
+            return Response({
+                'status': 404,
+                'msg': 'NotFound'
+            })
+        new_demo = serializers.demoSerializer(instance=old_demo,data=request.data,partial=False)
+        new_demo.is_valid(raise_exception=True)
+        new_demo.save()
+        return Response(status=status.HTTP_200_OK)

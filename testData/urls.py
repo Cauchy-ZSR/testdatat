@@ -15,17 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.db import router
-from django.urls import path, include
+from django.urls import path, include,re_path
 from rest_framework import routers
 from test1.views import demoViewSet
 
 
-router = routers.DefaultRouter()
-# 将demoViewSet注册到路由器内
-router.register(r'demo',demoViewSet)
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    re_path(r'^api/', include('test1.urls'))
 ]
